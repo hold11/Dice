@@ -15,7 +15,7 @@ import java.lang.*;
  * This class is a die cup (a cup holding multiple dice. It basically handles all the dice in the game.
  * @version 1.1.1
  */
-public class DieCup implements IDie{
+public class DieCup implements IDieCup {
     private Collection<Die> dice = new ArrayList<Die>();
     private Collection<Integer> results = new ArrayList<Integer>();
 
@@ -64,6 +64,12 @@ public class DieCup implements IDie{
     private void initDice(Collection<Die> dice) {
         this.dice.addAll(dice);
     }
+
+    public void addDice    (Die die)              { this.dice.add(die);        }
+    public void addDice    (Collection<Die> dice) { this.dice.addAll(dice);    }
+
+    public void removeDice (Die die)              { this.dice.remove(die);     }
+    public void removeDice (Collection<Die> dice) { this.dice.removeAll(dice); }
 
     public void roll() {
         this.results.clear();
