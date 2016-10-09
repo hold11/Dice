@@ -9,61 +9,57 @@
     ||======================================||
  */
 
-/**
- * This class uses the Dice class to roll multiple die. It handles the wanted amount
- * of die in the project, and rolls them all.
- * @version 1.0.0
- */
-public class DieCup {
-    private Die[] dice;     // [] Because we have an Array of Dice objects
-
+public class DieCup implements IDie{
+    private Die[] dice;
     private static int dieCount;
+    private static int faceCount;
 
-    /**
-     * When the DiceCup gets constructed, an arrays gets initialized with the wanted amount of die. Therefore
-     * it is important that the dieCount variable gets set first (with the setDieCount method).
-     */
     public DieCup() {
-        // We instantiate our Dice object array with the dieCount number of die
-        dice = new Die[dieCount];
-
-        // Every record in our Dice object array gets instantiated with a new Dice object
-        for (int i = 0; i < dieCount; i++) {
-            Die die = new Die();
-            dice[i] = die;
-        }
+        this.dieCount = 2;
+        this.faceCount = 6;
+        initDice();
     }
 
-    /**
-     * Returns an array of all the rolled die. All values gets put in an array, and outputted.
-     * @return array of int's
-     */
-    public int[] rollDice() {
-        // We need an array of results, so every dice that gets rolled, gets analysed speerately in the GameLogic class
-        int[] result = new int[dieCount];
-
-        // Every dice gets rolled, and the value of the face, gets inserted in the result array
-        for (int i = 0; i < dieCount; i++) {
-            result[i] = dice[i].rollDie();
-        }
-
-        // The result gets returned
-        return result;
+    public DieCup(int dieCount) {
+        this.dieCount  = dieCount;
+        this.faceCount = 6;
+        initDice();
     }
 
-    /**
-     * Sets the wanted amount of die in the project.
-     * @param _dieCount wanted amount of die.
-     */
-    public static void setDieCount(int _dieCount) {
-        dieCount = _dieCount;
+    public DieCup(int dieCount, int faceCount) {
+        this.dieCount  = dieCount;
+        this.faceCount = faceCount;
+        initDice();
     }
 
-    /**
-     * Returns the specified amount of die chosen in the project.
-     * @return int
-     */
-    public static int getDieCount() {
-        return dieCount;
+    public DieCup(int dieCount, Die die) {
+        this.dieCount = dieCount;
+
+        initDice(die);
+    }
+
+    public DieCup(Die[] dice) {
+        this.dieCount = dice.length;
+        initDice(dice);
+    }
+
+    private void initDice() {
+        for (int i = 0; i < dieCount; i++)
+            this.dice[i] = new Die(faceCount);
+    }
+
+    private void initDice(Die die) {
+        for (int i = 0; i < dieCount; i++)
+            this. dice[i] = die;
+    }
+
+    private void initDice(Die[] dice) {
+        for (int i = 0; i < dieCount; i++)
+            this.dice[i] = dice[i];
+    }
+
+    public void roll() {
+
     }
 }
+
