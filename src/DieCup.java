@@ -8,9 +8,17 @@
     ||                                      ||  Troels Just Christoffersen (s150052)
     ||======================================||
  */
+import java.util.*;
+import java.lang.*;
 
+/**
+ * This class is a die cup (a cup holding multiple dice. It basically handles all the dice in the game.
+ * @version 1.1.1
+ */
 public class DieCup implements IDie{
-    private Die[] dice;
+    private Collection<Die> dice = new ArrayList<Die>();
+    private Collection<Integer> results = new ArrayList<Integer>();
+
     private static int dieCount;
     private static int faceCount;
 
@@ -38,28 +46,39 @@ public class DieCup implements IDie{
         initDice(die);
     }
 
-    public DieCup(Die[] dice) {
-        this.dieCount = dice.length;
+    public DieCup(Collection<Die> dice) {
+        this.dieCount = dice.size();
         initDice(dice);
     }
 
     private void initDice() {
         for (int i = 0; i < dieCount; i++)
-            this.dice[i] = new Die(faceCount);
+            this.dice.add(new Die(faceCount));
     }
 
     private void initDice(Die die) {
         for (int i = 0; i < dieCount; i++)
-            this. dice[i] = die;
+            this.dice.add(die);
     }
 
-    private void initDice(Die[] dice) {
-        for (int i = 0; i < dieCount; i++)
-            this.dice[i] = dice[i];
+    private void initDice(Collection<Die> dice) {
+        this.dice.addAll(dice);
     }
 
     public void roll() {
+        this.results.clear();
 
+        for (Iterator<Die> diceIter = dice.iterator(); diceIter.hasNext(); )
+            this.results.add(diceIter.next().getRolledDieResult());
+    }
+
+    public Collection<Integer> getResults() {
+        return results;
+    }
+
+    public Collection<Integer> getRolledDieResults() {
+        roll();
+        return results;
     }
 }
 
